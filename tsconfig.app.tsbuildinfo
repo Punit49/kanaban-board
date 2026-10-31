@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/appcontext.tsx","./src/main.tsx","./src/types.ts","./src/vite-env.d.ts","./src/components/addtaskform.tsx","./src/components/column.tsx","./src/components/filterbar.tsx","./src/components/kanbanboard.tsx","./src/components/navbar.tsx","./src/components/taskcard.tsx"],"version":"5.8.3"}
