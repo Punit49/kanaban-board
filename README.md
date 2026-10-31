@@ -1,69 +1,86 @@
-# React + TypeScript + Vite
+# 📋 Kanban Task Board
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive, feature-rich Kanban board built with **React 19**, **TypeScript**, and **Tailwind CSS**. Users can organize and manage tasks across three workflow stages: **To Do**, **In Progress**, and **Completed**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- **Task Management**:
+  - **Create**: Add new tasks with title, description, priority (`Low`, `Medium`, `High`), and due date.
+  - **Edit & Delete**: Update existing task details or remove tasks with one click.
+  - **Status Transitions**: Move tasks across columns using **Drag-and-Drop** (`@dnd-kit`) or the quick status selector on each card.
+- **Search & Filtering**:
+  - **Live Search**: Instant search by task title or description.
+  - **Multi-Filter**: Filter tasks by priority and column status simultaneously.
+  - **Clear Filters**: One-click reset to return to the full task board.
+- **Data Persistence**:
+  - Saved automatically to `localStorage` so tasks persist across page refreshes.
+- **UX & Form Validation**:
+  - Form validation with `react-hook-form` (required fields, character limits, whitespace protection).
+  - Empty states for columns and no-results feedback when searches match nothing.
+  - Overdue date indicators on incomplete tasks.
+- **Responsive Layout**:
+  - Mobile-first design that adapts from a single-column layout on phones to a 3-column grid on desktop.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Framework**: React 19 + Vite
+- **Language**: TypeScript (Strict Mode)
+- **Styling**: Tailwind CSS
+- **Drag and Drop**: `@dnd-kit/core`
+- **Form Management**: `react-hook-form`
+- **Icons**: Heroicons / SVG
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 📁 Project Structure
+
+```text
+src/
+├── types.ts                    # Central TypeScript interfaces and union types
+├── AppContext.tsx              # Global state management and persistence logic
+├── App.tsx                     # Main layout container
+├── main.tsx                    # React root entry wrapped with AppProvider
+├── index.css                   # Tailwind theme setup
+└── components/
+    ├── Navbar.tsx              # Top navigation bar with "+ Add Task" button
+    ├── FilterBar.tsx           # Search input and priority/status dropdown filters
+    ├── KanbanBoard.tsx         # DndContext container and column layout
+    ├── Column.tsx              # Droppable column target with task counter
+    ├── TaskCard.tsx            # Draggable task card with edit/delete actions
+    └── AddTaskForm.tsx         # Modal form handling both task creation and editing
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🚀 Getting Started
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Install Dependencies
+```bash
+npm install
 ```
+
+### 2. Start the Development Server
+```bash
+npm run dev
+```
+
+### 3. Build for Production
+```bash
+npm run build
+```
+
+---
+
+## 💡 Key Architectural Decisions
+
+1. **Centralized State with Context API**:
+   - Kept state management lightweight without external heavyweight libraries (e.g. Redux). `AppContext` serves as the single source of truth for task CRUD operations.
+2. **Reactive Filtering with `useMemo`**:
+   - Filtered results are derived on the fly based on search queries and active filters without modifying or duplicating the core `tasks` array.
+3. **Accessible Hybrid Move Controls**:
+   - Combined `@dnd-kit/core` drag-and-drop for desktop convenience with inline dropdown controls for seamless mobile touchscreen usability.
+
